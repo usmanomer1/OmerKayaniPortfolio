@@ -60,9 +60,9 @@
   ],
   "sameAs": [],
   "subOrganization": [
-    { "@type": "Organization", "name": "VantageTown" },
-    { "@type": "Organization", "name": "VantEdge Parks" },
-    { "@type": "Organization", "name": "RareOres" },
+    { "@type": "Organization", "name": "VantageTown", "url": "https://www.vantagetown.com/" },
+    { "@type": "Organization", "name": "VantEdge Parks", "url": "https://www.vantedgeparks.com/" },
+    { "@type": "Organization", "name": "RareOres", "url": "https://www.rareores.com/" },
     { "@type": "Organization", "name": "Vantage Exports" },
     { "@type": "Organization", "name": "Vantage Global Markets" }
   ]
@@ -232,7 +232,9 @@ section.s.alt{ background:var(--paper-2); }
 .pillar h3{ font-family:var(--serif); font-size:22px; font-weight:500; margin:0; letter-spacing:-.005em; }
 .pillar .tg{ font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-mute); }
 .pillar p{ font-size:13.5px; color:var(--ink-soft); margin:0; line-height:1.55; }
-.pillar .more{ font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--copper); margin-top:auto; padding-top:14px; }
+.pillar .more{ font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--copper); margin-top:auto; padding-top:14px; cursor:pointer; transition:color .2s, gap .2s; display:inline-flex; align-items:center; gap:6px; align-self:flex-start; }
+.pillar .more:hover{ color:var(--copper-deep); gap:10px; }
+.pillar .more .ext{ font-size:11px; line-height:1; opacity:.85; }
 @media (max-width:1100px){ .pillars{ grid-template-columns:repeat(2,1fr); } .pillar{ border-bottom:1px solid var(--rule); } .pillar:nth-child(2n){ border-right:0; } }
 @media (max-width:600px){ .pillars{ grid-template-columns:1fr; } .pillar{ border-right:0; } }
 
@@ -796,35 +798,35 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
         <h3>VantageTown</h3>
         <span class="tg">Real Estate</span>
         <p>Premium master-planned residential communities. Curated lifestyles, long-term capital appreciation, institutional-quality development.</p>
-        <span class="more">Visit →</span>
+        <a class="more" href="https://www.vantagetown.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit VantageTown website (opens in new tab)">Visit <span class="ext">↗</span></a>
       </div>
       <div class="pillar">
         <span class="n">02 · B2B</span>
         <h3>VantEdge Parks</h3>
         <span class="tg">Industrial Real Estate</span>
         <p>Grade-A industrial parks with WorkNest™ workforce residences across Pakistan's high-growth corridors.</p>
-        <span class="more">Visit →</span>
+        <a class="more" href="https://www.vantedgeparks.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit VantEdge Parks website (opens in new tab)">Visit <span class="ext">↗</span></a>
       </div>
       <div class="pillar">
         <span class="n">03 · GLOBAL</span>
         <h3>RareOres</h3>
         <span class="tg">Mineral Intelligence</span>
         <p>Pakistan's first institutional-grade mineral intelligence, sourcing and trading platform — bridging $6T+ to global demand.</p>
-        <span class="more">Visit →</span>
+        <a class="more" href="https://www.rareores.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit RareOres website (opens in new tab)">Visit <span class="ext">↗</span></a>
       </div>
       <div class="pillar">
         <span class="n">04 · MULTI-MARKET</span>
         <h3>Vantage Exports</h3>
         <span class="tg">Chemical Commodities</span>
         <p>Multi-product industrial chemical trading with operations in Turkey, Pakistan and South Africa. Six core products.</p>
-        <span class="more">Visit →</span>
+        <a class="more" href="#exports" aria-label="Read about Vantage Exports">Read more →</a>
       </div>
       <div class="pillar">
         <span class="n">05 · PROP-DESK</span>
         <h3>Global Markets</h3>
         <span class="tg">Proprietary Trading</span>
         <p>Active book in physical commodities, equities and digital assets — anchored from Istanbul.</p>
-        <span class="more">Visit →</span>
+        <a class="more" href="#presence" aria-label="See Global Markets — Istanbul presence">Read more →</a>
       </div>
     </div>
 
@@ -1273,7 +1275,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
     </div>
     <div class="legal">
       <div>© 2026 Vantage Developers Pvt. Ltd. · All rights reserved</div>
-      <div>vantagedevelopers.com.pk</div>
+      <div><a href="/" aria-label="Vantage Developers home">vantagedevelopers.com.pk</a></div>
     </div>
   </div>
 </footer>
