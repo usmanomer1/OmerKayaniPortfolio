@@ -486,7 +486,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
   .section-head .desc{ font-size:14px; }
 
   /* hero — typography-led, drop the heavy portrait on mobile */
-  .hero .grid{ grid-template-columns:1fr; padding:64px 0 72px; gap:0; }
+  .hero .grid{ grid-template-columns:1fr; padding:64px calc(var(--pad-x) + 6px) 72px; gap:0; }
   .hero .grid > div:first-child{ padding:0 !important; }
   .hero .portrait{ display:none; }
   .hero h1{ font-size:clamp(42px, 12vw, 64px); margin-top:18px; }
@@ -543,23 +543,32 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
   .venture .v-cta .btn{ width:100%; justify-content:center; }
 
   /* tables — keep native table layout, let the wrapper scroll */
-  .table-scroll .metrics-table{ font-size:12.5px; min-width:480px; }
+  .table-scroll .metrics-table{ font-size:12.5px; min-width:520px; }
   .table-scroll .metrics-table th, .table-scroll .metrics-table td{ padding:11px 10px; white-space:nowrap; }
   .table-scroll .metrics-table th:first-child, .table-scroll .metrics-table td:first-child{ padding-left:2px; }
   .table-scroll .metrics-table th:last-child, .table-scroll .metrics-table td:last-child{ padding-right:2px; }
+  /* Rareores 5-year projection — all-numeric data, compress to fit phone viewport (no scroll) */
+  .fin-grid .table-scroll{ overflow-x:visible; }
+  .fin-grid .table-scroll .metrics-table{ font-size:11px; min-width:0; width:100%; }
+  .fin-grid .table-scroll .metrics-table th, .fin-grid .table-scroll .metrics-table td{ padding:9px 3px; }
+  .fin-grid .table-scroll .metrics-table th:first-child, .fin-grid .table-scroll .metrics-table td:first-child{ padding-left:0; padding-right:6px; }
+  .fin-grid .table-scroll .metrics-table td.metric{ font-size:9.5px; letter-spacing:.06em; }
+  .fin-grid .table-scroll .metrics-table thead th{ font-size:9.5px; letter-spacing:.1em; }
   .table-hint{ display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--copper); margin:0 0 10px; opacity:.95; transition:opacity .25s; }
   .dark .table-hint{ color:var(--copper-soft); }
   .table-wrap.is-scrolled-end .table-hint{ opacity:0; }
+  .table-wrap:not(.is-scrollable) .table-hint{ display:none; }
+  .table-wrap:not(.is-scrollable)::after{ display:none; }
   .table-hint .a{ display:inline-block; transform:translateX(0); animation:tableHintArr 1.6s ease-in-out infinite; }
   @keyframes tableHintArr{ 0%,100%{ transform:translateX(0); opacity:.7; } 50%{ transform:translateX(4px); opacity:1; } }
 
   /* fin milestone — vertical timeline so all 5 steps are fully readable */
-  .fin-mile{ grid-template-columns:1fr; }
-  .fin-mile .step{ flex-direction:row; align-items:center; gap:14px; padding:18px 22px; border-right:0; border-bottom:1px solid var(--rule-dark); }
+  .fin-mile{ grid-template-columns:1fr; max-width:100%; }
+  .fin-mile .step{ flex-direction:row; align-items:center; gap:12px; padding:16px 16px; border-right:0; border-bottom:1px solid var(--rule-dark); min-width:0; }
   .fin-mile .step:last-child{ border-bottom:0; }
-  .fin-mile .step .y{ width:54px; flex-shrink:0; }
-  .fin-mile .step .v{ font-size:22px; width:90px; flex-shrink:0; }
-  .fin-mile .step .d{ flex:1; font-size:12.5px; }
+  .fin-mile .step .y{ width:46px; flex-shrink:0; font-size:9.5px; }
+  .fin-mile .step .v{ font-size:clamp(18px, 5.2vw, 22px); width:auto; min-width:64px; flex-shrink:0; white-space:nowrap; }
+  .fin-mile .step .d{ flex:1; min-width:0; font-size:12px; line-height:1.4; }
 
   /* track */
   .track .item{ padding:26px 22px; gap:12px; }
@@ -670,7 +679,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
         <div class="it"><span class="v num">3</span><span class="l">Continents</span></div>
       </div>
       <div class="actions">
-        <a class="btn primary" href="#contact">Request the IM <span class="arr"></span></a>
+        <a class="btn primary" href="#contact">Request Investor Memo <span class="arr"></span></a>
         <a class="btn ghost" href="#group">Explore the Group</a>
       </div>
     </div>
@@ -1291,7 +1300,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
     </div>
     <div class="next">
       <div class="step"><div class="n">01</div><div><div class="t">NDA Execution</div><div class="d">Mutual NDA signed.</div></div></div>
-      <div class="step"><div class="n">02</div><div><div class="t">Detailed IM</div><div class="d">Vertical-specific IM issued.</div></div></div>
+      <div class="step"><div class="n">02</div><div><div class="t">Investor Memorandum</div><div class="d">Vertical-specific memorandum issued.</div></div></div>
       <div class="step"><div class="n">03</div><div><div class="t">Site Visit</div><div class="d">Chairman intro &amp; site visits.</div></div></div>
       <div class="step"><div class="n">04</div><div><div class="t">Term Sheet</div><div class="d">Returns &amp; structure agreed.</div></div></div>
       <div class="step"><div class="n">05</div><div><div class="t">Execution</div><div class="d">Capital deployed. Onboarded.</div></div></div>
