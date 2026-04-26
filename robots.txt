@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /chats/
+Disallow: /project/
+
+Sitemap: https://vantagedevelopers.com.pk/sitemap.xml
