@@ -96,6 +96,8 @@
 }
 *{ box-sizing:border-box; }
 html,body{ margin:0; padding:0; background:var(--paper); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+html,body{ overflow-x:hidden; max-width:100%; }
+html{ -webkit-text-size-adjust:100%; }
 body{ font-feature-settings:"ss01","kern","liga"; }
 a{ color:inherit; text-decoration:none; }
 img{ max-width:100%; display:block; }
@@ -411,17 +413,22 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
   .nav ul{ display:none; }
 
   .nav.open ul{
-    display:flex; position:fixed; left:0; right:0; top:60px; bottom:0;
-    flex-direction:column; gap:0; padding:24px var(--pad-x) 32px;
+    display:flex; position:fixed; left:0; right:0; top:60px;
+    height:calc(100vh - 60px);
+    height:calc(100dvh - 60px);
+    flex-direction:column; gap:0; padding:24px var(--pad-x) 40px;
+    margin:0; list-style:none;
     background:var(--paper); border-top:1px solid var(--rule);
-    overflow-y:auto; -webkit-overflow-scrolling:touch;
+    overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch;
+    z-index:80;
     animation:navIn .25s ease;
   }
-  .nav.open ul li{ border-bottom:1px solid var(--rule-soft); }
+  .nav.open ul li{ border-bottom:1px solid var(--rule-soft); list-style:none; }
+  .nav.open ul li.cta-li{ border-bottom:0; padding:0; margin-top:8px; }
   .nav.open ul a{ display:block; padding:18px 2px; font-family:var(--serif); font-weight:400; font-size:22px; letter-spacing:-.005em; color:var(--ink); }
   .nav.open ul a:hover, .nav.open ul a:active{ color:var(--copper); }
-  .nav.open .mob-cta{ display:inline-flex; align-items:center; gap:10px; margin-top:28px; padding:14px 20px; border:1px solid var(--ink); font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink); align-self:flex-start; }
-  body.nav-open{ overflow:hidden; }
+  .nav.open .mob-cta{ display:inline-flex; align-items:center; gap:10px; margin-top:24px; padding:14px 20px; border:1px solid var(--ink); font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--ink); align-self:flex-start; }
+  body.nav-open{ overflow:hidden; position:fixed; width:100%; }
 }
 @keyframes navIn{ from{ opacity:0; transform:translateY(-6px); } to{ opacity:1; transform:none; } }
 
@@ -591,7 +598,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
       <li><a href="#track">Record</a></li>
       <li><a href="#presence">Presence</a></li>
       <li><a href="#team">Leadership</a></li>
-      <a href="#contact" class="mob-cta">Investor Access →</a>
+      <li class="cta-li"><a href="#contact" class="mob-cta">Investor Access →</a></li>
     </ul>
     <a href="#contact" class="cta">Investor Access →</a>
     <button class="menu-btn" type="button" aria-label="Open menu" aria-controls="nav-menu" aria-expanded="false">
@@ -1298,12 +1305,21 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   const nav = document.querySelector('.nav');
   const btn = nav && nav.querySelector('.menu-btn');
   if(!nav || !btn) return;
+  let lockedY = 0;
 
   const setOpen = (open) => {
+    if(open){
+      lockedY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.top = `-${lockedY}px`;
+    }
     nav.classList.toggle('open', open);
     document.body.classList.toggle('nav-open', open);
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
     btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if(!open){
+      document.body.style.top = '';
+      window.scrollTo(0, lockedY);
+    }
   };
 
   btn.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
