@@ -500,20 +500,11 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
 
   /* small ambient stamp top-right of hero (replaces the globe energy) */
   .hero .grid::before{
-    content:"VTG · MMXXVI";
-    position:absolute; top:24px; right:var(--pad-x);
-    font-family:var(--mono); font-size:9.5px; letter-spacing:.24em;
-    color:var(--copper-soft); opacity:.85;
-    padding-left:14px; line-height:1;
-  }
-  .hero .grid::after{
-    content:""; position:absolute; top:26px; right:calc(var(--pad-x) + 92px);
-    width:5px; height:5px; border-radius:50%; background:var(--copper);
-    animation:heroPulse 2.4s ease-in-out infinite;
-  }
-  @keyframes heroPulse{
-    0%, 100%{ opacity:1; box-shadow:0 0 0 0 rgba(168,90,42,.55); }
-    70%{ opacity:.55; box-shadow:0 0 0 8px rgba(168,90,42,0); }
+    content:"VTG \00B7 MMXXVI";
+    position:absolute; top:26px; right:var(--pad-x);
+    font-family:var(--mono); font-size:9.5px; font-weight:500; letter-spacing:.26em;
+    color:var(--copper-soft); opacity:.9;
+    line-height:1;
   }
 
   /* ticker */
