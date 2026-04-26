@@ -298,6 +298,32 @@ section.s.alt{ background:var(--paper-2); }
 .fin-mile .step .d{ font-size:12.5px; color:#aeb6be; line-height:1.45; }
 @media (max-width:1000px){ .fin-grid{ grid-template-columns:1fr; gap:36px; } .fin-mile{ grid-template-columns:repeat(2,1fr); } .fin-mile .step{ border-bottom:1px solid var(--rule-dark); } .fin-mile .step:nth-child(2n){ border-right:0; } }
 
+/* ============== TIERS (WorkNest pricing) ============== */
+.tiers{ display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid var(--rule-dark); margin-top:64px; }
+.tiers > div{ padding:28px; border-right:1px solid var(--rule-dark); }
+.tiers > div:last-child{ border-right:0; }
+@media (max-width:880px){
+  .tiers{ grid-template-columns:repeat(2,1fr); }
+  .tiers > div{ border-right:1px solid var(--rule-dark); border-bottom:1px solid var(--rule-dark); }
+  .tiers > div:nth-child(2n){ border-right:0; }
+  .tiers > div:nth-last-child(-n+2){ border-bottom:0; }
+}
+@media (max-width:480px){
+  .tiers{ grid-template-columns:1fr; }
+  .tiers > div{ border-right:0; border-bottom:1px solid var(--rule-dark); padding:22px 24px; }
+  .tiers > div:last-child{ border-bottom:0; }
+}
+
+/* ============== REGIONS (Exports markets) ============== */
+.regions{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:64px; }
+@media (max-width:900px){ .regions{ grid-template-columns:1fr; gap:16px; } }
+
+/* ============== HORIZONTAL SCROLL WRAPPER (data tables) ============== */
+.table-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%; margin:0; }
+.table-scroll::-webkit-scrollbar{ height:6px; }
+.table-scroll::-webkit-scrollbar-thumb{ background:var(--rule); border-radius:3px; }
+.dark .table-scroll::-webkit-scrollbar-thumb{ background:var(--rule-dark); }
+
 /* ============== TRACK RECORD ============== */
 .track{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--rule); }
 .track .item{ padding:36px 28px; border-right:1px solid var(--rule); border-bottom:1px solid var(--rule); display:flex; flex-direction:column; gap:14px; }
@@ -440,7 +466,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
   .section-head{ margin-bottom:48px; }
 }
 @media (max-width:720px){
-  :root{ --pad-x:max(18px, 4vw); }
+  :root{ --pad-x:max(24px, 5.5vw); }
   body{ font-size:15.5px; }
 
   /* sections */
@@ -506,13 +532,17 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
   .venture .v-cta{ margin-top:24px; }
   .venture .v-cta .btn{ width:100%; justify-content:center; }
 
-  /* tables — let them scroll horizontally without breaking layout */
-  .metrics-table{ display:block; overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:nowrap; font-size:13px; }
-  .metrics-table th, .metrics-table td{ padding:12px 14px; }
+  /* tables — keep native table layout, let the wrapper scroll */
+  .table-scroll .metrics-table{ font-size:13px; min-width:520px; }
+  .table-scroll .metrics-table th, .table-scroll .metrics-table td{ padding:11px 14px; white-space:nowrap; }
 
-  /* fin milestone */
-  .fin-mile .step{ padding:18px 16px; }
-  .fin-mile .step .v{ font-size:24px; }
+  /* fin milestone — vertical timeline so all 5 steps are fully readable */
+  .fin-mile{ grid-template-columns:1fr; }
+  .fin-mile .step{ flex-direction:row; align-items:center; gap:14px; padding:18px 22px; border-right:0; border-bottom:1px solid var(--rule-dark); }
+  .fin-mile .step:last-child{ border-bottom:0; }
+  .fin-mile .step .y{ width:54px; flex-shrink:0; }
+  .fin-mile .step .v{ font-size:22px; width:90px; flex-shrink:0; }
+  .fin-mile .step .d{ flex:1; font-size:12.5px; }
 
   /* track */
   .track .item{ padding:26px 22px; gap:12px; }
@@ -898,23 +928,23 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
 
     <hr class="rule" style="border-color:var(--rule-dark);" />
 
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:0; border:1px solid var(--rule-dark); margin-top:64px;">
-      <div style="padding:28px; border-right:1px solid var(--rule-dark);">
+    <div class="tiers">
+      <div>
         <div class="eyebrow" style="color:var(--copper-soft);">WorkNest™ · Tier 1</div>
         <div class="num serif" style="font-size:36px; line-height:1; margin-top:12px; color:#f1ead9;">PKR 32L</div>
         <div class="tiny" style="margin-top:10px; color:#aeb6be;">Studio · Entry</div>
       </div>
-      <div style="padding:28px; border-right:1px solid var(--rule-dark);">
+      <div>
         <div class="eyebrow" style="color:var(--copper-soft);">Tier 2</div>
         <div class="num serif" style="font-size:36px; line-height:1; margin-top:12px; color:#f1ead9;">PKR 44L</div>
         <div class="tiny" style="margin-top:10px; color:#aeb6be;">1 BR · Compact</div>
       </div>
-      <div style="padding:28px; border-right:1px solid var(--rule-dark);">
+      <div>
         <div class="eyebrow" style="color:var(--copper-soft);">Tier 3</div>
         <div class="num serif" style="font-size:36px; line-height:1; margin-top:12px; color:#f1ead9;">PKR 55L</div>
         <div class="tiny" style="margin-top:10px; color:#aeb6be;">1 BR · Premium</div>
       </div>
-      <div style="padding:28px;">
+      <div>
         <div class="eyebrow" style="color:var(--copper-soft);">Tier 4</div>
         <div class="num serif" style="font-size:36px; line-height:1; margin-top:12px; color:#f1ead9;">PKR 67L</div>
         <div class="tiny" style="margin-top:10px; color:#aeb6be;">2 BR · Family</div>
@@ -952,6 +982,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
       <div>
         <div class="eyebrow" style="color:var(--copper-soft);">RareOres · Five-Year Projection</div>
         <h3 class="serif" style="font-weight:300; font-size:clamp(36px,4vw,56px); line-height:.98; margin:18px 0 28px; color:#f1ead9;">From <em class="it" style="color:var(--copper-soft);">platform</em><br/>to global mineral empire.</h3>
+        <div class="table-scroll">
         <table class="metrics-table">
           <thead>
             <tr><th>Metric</th><th class="num">Y1</th><th class="num">Y2</th><th class="num">Y3</th><th class="num">Y4</th><th class="num">Y5</th></tr>
@@ -964,6 +995,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
             <tr><td class="metric">Buyer Markets</td><td class="num">8</td><td class="num">18</td><td class="num">32</td><td class="num">42</td><td class="num">55+</td></tr>
           </tbody>
         </table>
+        </div>
       </div>
       <div>
         <div class="eyebrow" style="color:var(--copper-soft);">Valuation Path</div>
@@ -990,6 +1022,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
     </div>
 
     <div data-rv>
+      <div class="table-scroll">
       <table class="metrics-table">
         <thead>
           <tr><th>Product</th><th>Markets</th><th class="num">Margin</th><th class="num">Price / MT</th><th>Annual Demand</th><th>Use Cases</th></tr>
@@ -1003,9 +1036,10 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
           <tr><td><b>Methanol</b></td><td>PAK · ZAF</td><td class="num">20–32%</td><td class="num">$320–$390</td><td>120,000 MT</td><td>Biodiesel · feedstock</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:64px;">
+    <div class="regions">
       <div style="border:1px solid var(--rule); padding:28px;">
         <div style="display:flex; justify-content:space-between; align-items:flex-start;">
           <h4 class="serif" style="font-size:26px; margin:0;">Turkey</h4>
