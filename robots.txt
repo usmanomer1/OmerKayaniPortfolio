@@ -3,4 +3,4 @@ Allow: /
 Disallow: /chats/
 Disallow: /project/
 
-Sitemap: https://vantagedevelopers.com.pk/sitemap.xml
+Sitemap: https://vantagegroup.com.pk/sitemap.xml
