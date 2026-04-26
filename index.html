@@ -1381,6 +1381,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
 // smooth in-page anchors
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',(e)=>{
+    if(a.closest('.nav.open')) return;
     const id=a.getAttribute('href'); if(id.length<2) return;
     const el=document.querySelector(id); if(!el) return;
     e.preventDefault();
@@ -1406,20 +1407,38 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     if(!open){
       document.body.style.top = '';
-      window.scrollTo(0, lockedY);
     }
   };
 
-  btn.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+  const closeAndRestore = () => { setOpen(false); window.scrollTo(0, lockedY); };
 
-  // close after tapping any link inside the open menu
+  btn.addEventListener('click', () => {
+    if(nav.classList.contains('open')) closeAndRestore();
+    else setOpen(true);
+  });
+
+  // tapping a link inside the open menu: close, restore body, then scroll to target
   nav.querySelectorAll('ul a').forEach(a =>
-    a.addEventListener('click', () => setOpen(false))
+    a.addEventListener('click', (e) => {
+      if(!nav.classList.contains('open')) return;
+      const href = a.getAttribute('href');
+      const isAnchor = href && href.startsWith('#') && href.length > 1;
+      if(isAnchor){
+        e.preventDefault();
+        const target = document.querySelector(href);
+        closeAndRestore();
+        if(target){
+          requestAnimationFrame(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+        }
+      } else {
+        closeAndRestore();
+      }
+    })
   );
 
   // close on Esc
   document.addEventListener('keydown', e => {
-    if(e.key === 'Escape' && nav.classList.contains('open')) setOpen(false);
+    if(e.key === 'Escape' && nav.classList.contains('open')) closeAndRestore();
   });
 
   // close if viewport grows past mobile breakpoint
