@@ -319,10 +319,20 @@ section.s.alt{ background:var(--paper-2); }
 @media (max-width:900px){ .regions{ grid-template-columns:1fr; gap:16px; } }
 
 /* ============== HORIZONTAL SCROLL WRAPPER (data tables) ============== */
+.table-wrap{ position:relative; }
 .table-scroll{ overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%; margin:0; }
 .table-scroll::-webkit-scrollbar{ height:6px; }
 .table-scroll::-webkit-scrollbar-thumb{ background:var(--rule); border-radius:3px; }
 .dark .table-scroll::-webkit-scrollbar-thumb{ background:var(--rule-dark); }
+.table-wrap::after{
+  content:""; position:absolute; top:0; right:0; bottom:0; width:42px;
+  background:linear-gradient(to right, transparent, var(--paper) 85%);
+  pointer-events:none; opacity:0; transition:opacity .2s;
+}
+.dark .table-wrap::after{ background:linear-gradient(to right, transparent, var(--paper-dark) 85%); }
+.table-wrap.is-scrollable::after{ opacity:1; }
+.table-wrap.is-scrolled-end::after{ opacity:0; }
+.table-hint{ display:none; }
 
 /* ============== TRACK RECORD ============== */
 .track{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--rule); }
@@ -481,7 +491,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
   .hero .portrait{ display:none; }
   .hero h1{ font-size:clamp(42px, 12vw, 64px); margin-top:18px; }
   .hero .lede{ font-size:16px; line-height:1.45; margin-top:24px; max-width:none; }
-  .hero .meta{ flex-wrap:wrap; gap:22px 36px; margin-top:32px; padding-top:24px; border-top:1px solid var(--rule-dark); }
+  .hero .meta{ display:grid; grid-template-columns:1fr 1fr; gap:22px 24px; margin-top:32px; padding-top:24px; border-top:1px solid var(--rule-dark); }
   .hero .meta .v{ font-size:32px; }
   .hero .meta .l{ font-size:9.5px; }
   .hero .actions{ margin-top:36px; gap:10px; flex-direction:column; align-items:stretch; }
@@ -533,8 +543,15 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
   .venture .v-cta .btn{ width:100%; justify-content:center; }
 
   /* tables — keep native table layout, let the wrapper scroll */
-  .table-scroll .metrics-table{ font-size:13px; min-width:520px; }
-  .table-scroll .metrics-table th, .table-scroll .metrics-table td{ padding:11px 14px; white-space:nowrap; }
+  .table-scroll .metrics-table{ font-size:12.5px; min-width:480px; }
+  .table-scroll .metrics-table th, .table-scroll .metrics-table td{ padding:11px 10px; white-space:nowrap; }
+  .table-scroll .metrics-table th:first-child, .table-scroll .metrics-table td:first-child{ padding-left:2px; }
+  .table-scroll .metrics-table th:last-child, .table-scroll .metrics-table td:last-child{ padding-right:2px; }
+  .table-hint{ display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--copper); margin:0 0 10px; opacity:.95; transition:opacity .25s; }
+  .dark .table-hint{ color:var(--copper-soft); }
+  .table-wrap.is-scrolled-end .table-hint{ opacity:0; }
+  .table-hint .a{ display:inline-block; transform:translateX(0); animation:tableHintArr 1.6s ease-in-out infinite; }
+  @keyframes tableHintArr{ 0%,100%{ transform:translateX(0); opacity:.7; } 50%{ transform:translateX(4px); opacity:1; } }
 
   /* fin milestone — vertical timeline so all 5 steps are fully readable */
   .fin-mile{ grid-template-columns:1fr; }
@@ -982,6 +999,8 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
       <div>
         <div class="eyebrow" style="color:var(--copper-soft);">RareOres · Five-Year Projection</div>
         <h3 class="serif" style="font-weight:300; font-size:clamp(36px,4vw,56px); line-height:.98; margin:18px 0 28px; color:#f1ead9;">From <em class="it" style="color:var(--copper-soft);">platform</em><br/>to global mineral empire.</h3>
+        <div class="table-wrap">
+        <div class="table-hint">Swipe for Y4 · Y5 <span class="a">→</span></div>
         <div class="table-scroll">
         <table class="metrics-table">
           <thead>
@@ -995,6 +1014,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
             <tr><td class="metric">Buyer Markets</td><td class="num">8</td><td class="num">18</td><td class="num">32</td><td class="num">42</td><td class="num">55+</td></tr>
           </tbody>
         </table>
+        </div>
         </div>
       </div>
       <div>
@@ -1022,6 +1042,8 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
     </div>
 
     <div data-rv>
+      <div class="table-wrap">
+      <div class="table-hint">Swipe for full table <span class="a">→</span></div>
       <div class="table-scroll">
       <table class="metrics-table">
         <thead>
@@ -1036,6 +1058,7 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
           <tr><td><b>Methanol</b></td><td>PAK · ZAF</td><td class="num">20–32%</td><td class="num">$320–$390</td><td>120,000 MT</td><td>Biodiesel · feedstock</td></tr>
         </tbody>
       </table>
+      </div>
       </div>
     </div>
 
@@ -1325,6 +1348,26 @@ footer.f .legal a{ display:inline; color:#5d6a76; }
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   },{ threshold:.12, rootMargin:"0px 0px -60px 0px" });
   document.querySelectorAll('[data-rv]').forEach(el=>io.observe(el));
+})();
+// horizontal-scroll affordance for tables: fade-edge + auto-hide hint when fully scrolled
+(function(){
+  const wraps = document.querySelectorAll('.table-wrap');
+  if(!wraps.length) return;
+  wraps.forEach(wrap => {
+    const scroller = wrap.querySelector('.table-scroll');
+    if(!scroller) return;
+    const update = () => {
+      const overflow = scroller.scrollWidth - scroller.clientWidth;
+      const canScroll = overflow > 4;
+      const atEnd = canScroll && (overflow - scroller.scrollLeft) <= 4;
+      wrap.classList.toggle('is-scrollable', canScroll);
+      wrap.classList.toggle('is-scrolled-end', atEnd);
+    };
+    update();
+    requestAnimationFrame(update);
+    scroller.addEventListener('scroll', update, { passive:true });
+    window.addEventListener('resize', update);
+  });
 })();
 // smooth in-page anchors
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
